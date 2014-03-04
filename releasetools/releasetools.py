@@ -1,3 +1,4 @@
+# Copyright (C) 2012 The Android Open Source Project
 # Copyright (C) 2013 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,14 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# NFC access control + feature files + configuration
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
-    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
-    $(LOCAL_PATH)/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
-
-# NFC packages
-PRODUCT_PACKAGES += \
-    nfc_nci.msm8960 \
-    NfcNci \
-    Tag
+def FullOTA_InstallEnd(info):
+  info.script.AppendExtra('ifelse(is_substring("I9190", getprop("ro.bootloader")), run_program("/sbin/sh", "-c", "busybox cp -R /system/blobs/gsm/* /system/"));')
+  info.script.AppendExtra('ifelse(is_substring("L520", getprop("ro.bootloader")), run_program("/sbin/sh", "-c", "busybox cp -R /system/blobs/cdma/* /system/"));')
+  info.script.AppendExtra('ifelse(is_substring("I9195", getprop("ro.bootloader")), run_program("/sbin/sh", "-c", "busybox cp -R /system/blobs/gsm/* /system/"));')

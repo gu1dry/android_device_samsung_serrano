@@ -15,10 +15,10 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # Also get non-open-source specific aspects if available
-$(call inherit-product-if-exists, vendor/samsung/serrano-common/serrano-common-vendor.mk)
+$(call inherit-product-if-exists, vendor/samsung/serrano/serrano-vendor.mk)
 
 # Common overlay
-DEVICE_PACKAGE_OVERLAYS += device/samsung/serrano-common/overlay
+DEVICE_PACKAGE_OVERLAYS += device/samsung/serrano/overlay
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal hdpi
@@ -105,6 +105,18 @@ PRODUCT_PACKAGES += \
     FM2 \
     FMRecord
 
+# NFC access control + feature files + configuration
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
+    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
+    $(LOCAL_PATH)/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
+
+# NFC packages
+PRODUCT_PACKAGES += \
+    nfc_nci.msm8960 \
+    NfcNci \
+    Tag
+
 # Torch
 PRODUCT_PACKAGES += Torch
 
@@ -132,7 +144,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=/system/lib/libqc-opt.so
 
-#common build.props
+# common build.props
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
     ro.chipname=MSM8930AB \

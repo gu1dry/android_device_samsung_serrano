@@ -1,0 +1,5 @@
+# system.prop for serrano
+#
+
+# cannot take spaces
+rild.libargs=-d /dev/smd0

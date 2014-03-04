@@ -23,7 +23,7 @@
 # inherit from common msm8930
 -include device/samsung/msm8930-common/BoardConfigCommon.mk
 
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/serrano-common/include
+TARGET_SPECIFIC_HEADER_PATH := device/samsung/serrano/include
 
 # For backwards compatibility with camera blobs
 COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
@@ -40,11 +40,11 @@ TARGET_KERNEL_SELINUX_CONFIG := selinux_defconfig
 TARGET_BOOTLOADER_BOARD_NAME := MSM8960
 
 # Recovery
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/serrano-common/recovery/recovery_keys.c
+BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/serrano/recovery/recovery_keys.c
 BOARD_USES_MMCUTILS := true
 BOARD_HAS_NO_MISC_PARTITION := true
-TARGET_RECOVERY_FSTAB := device/samsung/serrano-common/rootdir/fstab.qcom
-TARGET_RECOVERY_INITRC := device/samsung/serrano-common/rootdir/init.recovery.rc
+TARGET_RECOVERY_FSTAB := device/samsung/serrano/rootdir/fstab.qcom
+TARGET_RECOVERY_INITRC := device/samsung/serrano/rootdir/init.recovery.rc
 TARGET_RECOVERY_LCD_BACKLIGHT_PATH := \"/sys/class/lcd/panel/backlight\"
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 
@@ -56,8 +56,13 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 5821676544
 BOARD_CACHEIMAGE_PARTITION_SIZE := 209715200
 BOARD_FLASH_BLOCK_SIZE := 131072
 
+# Vendor Init
+TARGET_UNIFIED_DEVICE := true
+TARGET_INIT_VENDOR_LIB := libinit_msm
+TARGET_LIBINIT_DEFINES_FILE := device/samsung/serrano/init/init_serrano.c
+
 # Bluetooth
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/serrano-common/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/serrano/bluetooth
 
 # NFC
 BOARD_NFC_HAL_SUFFIX := msm8960
@@ -90,3 +95,12 @@ BOARD_HAVE_NEW_QC_GPS := true
 
 # Time services
 BOARD_USES_QC_TIME_SERVICES := true
+
+# Assert
+TARGET_OTA_ASSERT_DEVICE := serrano3g,serrano3gxx,i9190,GT-I9190,serranoltespr,serranoltespr,L520,SPH-L520,serranolte,serranoltexx,i9195,GT-I9195
+
+# Kernel
+TARGET_KERNEL_CONFIG := msm8930_serrano_eur_lte_defconfig
+
+# Releasetools
+TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/serrano/releasetools
